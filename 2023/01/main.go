@@ -16,7 +16,7 @@ func getInputLines() []string {
 	return strings.Split(strings.TrimSpace(input), "\n")
 }
 
-var re = regexp.MustCompile("\\d")
+var re = regexp.MustCompile(`\d`)
 
 var digits = map[string]string{
 	"one": "1", "two": "2", "three": "3", "four": "4", "five": "5", "six": "6", "seven": "7", "eight": "8", "nine": "9",

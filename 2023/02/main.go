@@ -16,8 +16,8 @@ func getInputLines() []string {
 	return strings.Split(strings.TrimSpace(input), "\n")
 }
 
-var re = regexp.MustCompile("\\d+")
-var colourRe = regexp.MustCompile("(\\d+) (red|green|blue)")
+var re = regexp.MustCompile(`\d+`)
+var colourRe = regexp.MustCompile(`(\d+) (red|green|blue)`)
 
 var validCubes = map[string]int64{
 	"red":   12,
