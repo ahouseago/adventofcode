@@ -26,17 +26,17 @@ func main() {
 		winningNumbers := re.FindAllString(strings.Split(scratchcard[0], ":")[1], -1)
 		numbers := re.FindAllString(scratchcard[1], -1)
 		winning := make(map[string]bool, len(winningNumbers))
-		numberOfGoodNumbers := float64(-1)
+		score := 0
 		for _, number := range winningNumbers {
 			winning[number] = true
 		}
 		for _, option := range numbers {
 			if winning[option] {
-				numberOfGoodNumbers++
+				score++
 			}
 		}
-		winningCardCounts[cardIndex] = int(numberOfGoodNumbers)
-		part1 += int(math.Pow(2, numberOfGoodNumbers))
+		winningCardCounts[cardIndex] = score
+		part1 += int(math.Pow(2, float64(score-1)))
 	}
 
 	fmt.Println("Part 1:", part1)
@@ -47,8 +47,8 @@ func main() {
 		winCount := winningCardCounts[cardIndex]
 		for i := 0; i <= numCards[cardIndex]; i++ {
 			part2++
-			for j := cardIndex; j <= cardIndex+winCount; j++ {
-				numCards[j+1]++
+			for j := cardIndex + 1; j <= cardIndex+winCount; j++ {
+				numCards[j]++
 			}
 		}
 	}
