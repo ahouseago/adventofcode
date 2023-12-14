@@ -10,30 +10,20 @@ import (
 var input string
 
 func main() {
-	var rolled []string
-	for row, line := range strings.Split(strings.TrimSpace(input), "\n") {
-		rolled = append(rolled, line)
-		if row == 0 {
+	state := strings.Split(strings.TrimSpace(input), "\n")
+	fmt.Println("Part 1:", calcNorthLoad(roll(state, "N")))
+
+	stateCache := make(map[string][]string)
+	// I'll be honest, I'm not sure why 1000 works the same as 1000000000.
+	// Maybe something to do with the loop size being shorter than 1000?
+	for i := 0; i < 1000; i++ {
+		key := strings.Join(state, "\n")
+		if cached, exists := stateCache[key]; exists {
+			state = cached
 			continue
 		}
-		for col, rock := range line {
-			if rock != 'O' {
-				continue
-			}
-			for i := 1; i <= row; i++ {
-				if rolled[row-i][col] != '.' {
-					break
-				}
-				rolled[row-i] = rolled[row-i][:col] + "O" + rolled[row-i][col+1:]
-				rolled[row-i+1] = rolled[row-i+1][:col] + "." + rolled[row-i+1][col+1:]
-			}
-		}
-	}
-	fmt.Println("Part 1:", calcNorthLoad(rolled))
-
-	state := strings.Split(strings.TrimSpace(input), "\n")
-	for i := 0; i < 1_000_000_000; i++ {
 		state = cycle(state)
+		stateCache[key] = state
 	}
 	fmt.Println("Part 2:", calcNorthLoad(state))
 }
